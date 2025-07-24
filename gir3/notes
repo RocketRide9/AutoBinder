@@ -1,0 +1,4 @@
+Name, or CanonicalName (deprecated) - name of the enumeration
+CName - name of the object type in C.
+E.g. Name: `ErrorCode`, CName: `int`
+     Name: `DeviceInfo`, CName: `cl_device_info`
