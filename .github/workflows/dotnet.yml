@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run
-      run: gir3/run.sh --debug
+      run: AutoBinder/run.sh --debug
     - name: Upload .vapi
       uses: actions/upload-artifact@v4
       with:
