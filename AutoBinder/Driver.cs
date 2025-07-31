@@ -7,20 +7,16 @@ class Driver {
             LoadOptions.PreserveWhitespace
         );
         var root = doc.Root!;
-        var res = "";
-
         var reg = new KhronosRegistry.Registry(root);
-        var srcWrite = new Vala.SourceWriter();
+
         Directory.CreateDirectory("../../../../vapi");
+        File.CreateText("../../../../vapi/cl.vapi").Close();
         var ostream = new StreamWriter(
-            "../../../../vapi/cl.vapi",
-            new FileStreamOptions (){
-                Mode = FileMode.OpenOrCreate | FileMode.Truncate,
-                Access = FileAccess.Write,
-            }
+            "../../../../vapi/cl.vapi"
         );
+
+        var srcWrite = new Vala.SourceWriter();
         srcWrite.Write(ostream, reg);
-        ostream.Write(res);
         ostream.Close();
     }    
 }
