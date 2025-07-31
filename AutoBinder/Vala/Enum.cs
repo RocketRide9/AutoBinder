@@ -52,7 +52,8 @@ public class Enum : ISymbol
         {
             res += a.ToSource() + "\n";
         }
-        res += $"public enum {Identifier} {{\n";
+        res += $"public enum {Identifier}";
+        res += " {\n";
         
         foreach (var a in Members)
         {

@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-BIN_MAME="opengl-glib"
+BIN_MAME="AutoBinder"
 DOTNET_VER="net9.0"
 
 function run_release () {

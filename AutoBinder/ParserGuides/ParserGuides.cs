@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ParserGuides;
 
@@ -10,7 +11,10 @@ public static class ParserGuides
             if (_guides == null)
             {
                 string jsonString = File.ReadAllText("../../../ParserGuides/Guides.json");
-                _guides = JsonSerializer.Deserialize<Guides>(jsonString)!;
+                var opts = new JsonSerializerOptions() {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+                _guides = JsonSerializer.Deserialize<Guides>(jsonString, opts)!;
             }
 
             return _guides;

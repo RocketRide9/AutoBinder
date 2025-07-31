@@ -34,7 +34,6 @@ public interface IAttribute {
 }
 
 public class Flags : IAttribute {}
-public class SimpleType : IAttribute {}
 
 public class CCode : IAttribute
 {

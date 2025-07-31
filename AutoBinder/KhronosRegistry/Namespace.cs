@@ -1,4 +1,4 @@
-namespace KhronosRegisty;
+namespace KhronosRegistry;
 
 public class Namespace
 {
@@ -18,6 +18,8 @@ public class Namespace
     /// </summary>
     public string Name { get; }
 
+    public Dictionary<string, IType> Types { get; set; } = [];
+
     public List<Enum> Enums { get; } = [];
 
     public Namespace (string prefix, string name)
@@ -29,6 +31,26 @@ public class Namespace
     public void AddEnum (Enum en)
     {
         en.ApplyNamespacePrefix (Prefix);
+
+        var verified = false;
+        foreach (var item in Types)
+        {
+            if (en.Name == item.Key)
+            {
+                verified = true;
+                break;
+            }
+        }
+
+        if (!verified)
+        {
+            verified = TypeCollection.BasicTypes.Contains(en.CName);
+        }
+
+        if (!verified)
+        {
+            throw new Exception($"Couldn't find type such type: {en.Name}");
+        }
         Enums.Add(en);
     }
 }

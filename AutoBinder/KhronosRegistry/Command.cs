@@ -1,4 +1,4 @@
-namespace KhronosRegisty;
+namespace KhronosRegistry;
 
 public class Command
 {

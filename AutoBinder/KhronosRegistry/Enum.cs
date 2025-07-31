@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 
-namespace KhronosRegisty;
+namespace KhronosRegistry;
 
 // Name - pair name as present in .xml spec
 // e.g. CL_PLATFORM_PROFILE from cl_platform_info
@@ -41,8 +41,8 @@ public class EnumMember
 public class Enum 
 {
 
-    public required string CName { get; set; }
-    public string? Name { get; set; }
+    public string CName { get; set; }
+    public string Name { get; set; }
     public string? Vendor { get; set; }
     public string? Comment { get; set; }
     public bool IsBitmask { get; set; }
@@ -78,18 +78,18 @@ public class Enum
         }
     }
     string? _prefix;
+    public string NamespacePrefix { get; set; }
 
-    public required string NamespacePrefix {
-        get => _namespacePrefix;
-        set {
-            _namespacePrefix = value;
-
-            Name ??= Strings.Converter.SnakeToPascal(CName[(_namespacePrefix.Length+1)..]);
+    public Enum(string cname, string? name, string nsPrefix) {
+        CName = cname;
+        NamespacePrefix = nsPrefix;
+        if (name == null)
+        {
+            Name ??= CName[(NamespacePrefix.Length+1)..];
+        } else {
+            Name = name;
         }
     }
-    string _namespacePrefix;
-
-    public Enum() {}
     
     [SetsRequiredMembers]
     public Enum(XElement node, string nsPrefix)
@@ -97,7 +97,9 @@ public class Enum
         CName = node.Attribute("name")?.Value!;
         Vendor = node.Attribute("vendor")?.Value!;
         Comment = node.Attribute("comment")?.Value;
+        // HACK: Name doesn't matter in this case. Just anything
         Name = CName;
+        NamespacePrefix = nsPrefix;
 
         foreach (var en in node.Elements())
         {
